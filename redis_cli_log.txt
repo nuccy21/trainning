@@ -1,0 +1,105 @@
+# redis-cli
+127.0.0.1:6379> auth redispw
+OK
+127.0.0.1:6379> SET stringkey1 "hello"
+OK
+127.0.0.1:6379> GET stringkey1
+"hello"
+127.0.0.1:6379> MSET stringkey2 "2" [stringkey3 "3"]
+Invalid argument(s)
+127.0.0.1:6379> MSET stringkey2 "2" stringkey3 "3"
+OK
+127.0.0.1:6379> MGET stringkey2 stringkey3
+1) "2"
+2) "3"
+127.0.0.1:6379> INCR stringkey2
+(integer) 3
+127.0.0.1:6379> DECR stringkey2
+(integer) 2
+127.0.0.1:6379> SETNX stringkey2 "replace"
+(integer) 0
+127.0.0.1:6379> GET stringkey2
+"2"
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> HSET hashkey age 18
+(integer) 1
+127.0.0.1:6379> HGET hashkey age
+"18"
+127.0.0.1:6379> HGETALL hashkey
+1) "age"
+2) "18"
+127.0.0.1:6379> HMSET hashkey gender "M" name "tom"
+OK
+127.0.0.1:6379> HMGET hashkey name gender age
+1) "tom"
+2) "M"
+3) "18"
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> LPUSH listkey "tom" "peter"
+(integer) 2
+127.0.0.1:6379> LPOP listk
+(nil)
+127.0.0.1:6379> 
+127.0.0.1:6379> LPOP listkey
+"peter"
+127.0.0.1:6379> RPUSH listkey "mary" "angel"
+(integer) 3
+127.0.0.1:6379> RPOP listkey
+"angel"
+127.0.0.1:6379> LREM listkey 1 mary
+(integer) 1
+127.0.0.1:6379> LRANGE listkey 1 2
+(empty array)
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> SADD setkey "tom" "peter" "jim"
+(integer) 3
+127.0.0.1:6379> SADD setkey2 "jim" "mary" "angel"
+(integer) 3
+127.0.0.1:6379> SDIFF setkey setkey2
+1) "peter"
+2) "tom"
+127.0.0.1:6379> SINTER setkey setkey2
+1) "jim"
+127.0.0.1:6379> SUNION setkey setkey2
+1) "peter"
+2) "tom"
+3) "jim"
+4) "angel"
+5) "mary"
+127.0.0.1:6379> SISMEMBER setkey "jim"
+(integer) 1
+127.0.0.1:6379> SMEMBERS setkey
+1) "peter"
+2) "jim"
+3) "tom"
+127.0.0.1:6379> SREM setkey "tom"
+(integer) 1
+127.0.0.1:6379> ZADD zsetkey 100 "tom" 90 "peter" 60 "jim"
+(integer) 3
+127.0.0.1:6379> ZINCRBY zsetkey 2 "jim"
+"62"
+127.0.0.1:6379> ZRANGEBYSCORE zsetkey 85 90 
+1) "peter"
+127.0.0.1:6379> ZADD zsetkey2 20 "tom" 40 "peter" 80 "jim"
+(integer) 3
+127.0.0.1:6379> ZINTERSTORE sum_point 2 zsetkey zsetkey2
+(integer) 3
+127.0.0.1:6379>  ZRANGE sum_point 0 -1 WITHSCORES 
+1) "tom"
+2) "120"
+3) "peter"
+4) "130"
+5) "jim"
+6) "142"
+127.0.0.1:6379> 
