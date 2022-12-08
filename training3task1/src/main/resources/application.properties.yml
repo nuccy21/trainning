@@ -1,0 +1,35 @@
+spring
+cloud:
+  stream:
+    bindings:
+      myOutput:
+        destination: login-user
+        content-type: application/json
+      myInput:
+        destination: login-user
+        group: logined-member
+
+    rabbit:
+      bindings:
+        myOutput:
+          producer:
+            routing-key-expression: headers.routingKey
+            delayed-exchange: true
+
+        myInput:
+          consumer:
+            binding-routing-key: login.user.succeed
+            delayed-exchange: true
+            auto-bind-dlq: true
+            republish-to-dlq: true
+
+    kafka:
+      binder:
+        brokers: localhost:9092
+      bindings:
+        apiServiceLog-in-0:
+          destination: api-service-log
+          content-type: application/json
+        apiServiceLog-out-0:
+          destination: api-service-log
+          content-type: application/json
